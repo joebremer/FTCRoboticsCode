@@ -11,7 +11,7 @@ public class AutoMode_TestTurn extends AutoMode {
 
     @Override
     protected void autoMode() throws InterruptedException {
-        driveTurnToHeading(0.5,90);
+        //driveTurnToHeading(0.5,90);
         //driveForwardForIN(2);
         //driveTurnToHeading(0.5,90);
     }

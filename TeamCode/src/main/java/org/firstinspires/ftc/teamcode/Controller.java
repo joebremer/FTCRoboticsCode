@@ -24,52 +24,29 @@ public class Controller extends LinearOpMode{
     protected DcMotor mtr_bl;
     protected DcMotor mtr_br;
 
+    protected DcMotor slide;
+    protected int slideStartPosition;
+    protected int slideSize = -2000;
+    protected int slidePad = -800;
+    protected float slideSpeed = 0.5f;
+
     protected Servo grabber;
 
     protected BNO055IMU imu;
-
-    protected double robotHeading  = 0;
-    protected double headingOffset = 0;
-    protected double headingError  = 0;
-    private double targetHeading = 0;
-
-    // Calculate the COUNTS_PER_INCH for your specific drive train.
-    // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
-    // For external drive gearing, set DRIVE_GEAR_REDUCTION as needed.
-    // For example, use a value of 2.0 for a 12-tooth spur gear driving a 24-tooth spur gear.
-    // This is gearing DOWN for less speed and more torque.
-    // For gearing UP, use a gear ratio less than 1.0. Note this will affect the direction of wheel rotation.
-    static final double     COUNTS_PER_MOTOR_REV    = 537.7 ;   // eg: GoBILDA 312 RPM Yellow Jacket
-    static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // No External Gearing.
-    static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
-    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * 3.1415);
-
-    // These constants define the desired driving/control characteristics
-    // They can/should be tweaked to suit the specific robot drive train.
-    static final double     DRIVE_SPEED             = 0.4;     // Max driving speed for better distance accuracy.
-    static final double     TURN_SPEED              = 0.2;     // Max Turn speed to limit turn rate
-    static final double     HEADING_THRESHOLD       = 1.0 ;    // How close must the heading get to the target before moving to next step.
-    // Requiring more accuracy (a smaller number) will often make the turn take longer to get into the final position.
-    // Define the Proportional control coefficient (or GAIN) for "heading control".
-    // We define one value when Turning (larger errors), and the other is used when Driving straight (smaller errors).
-    // Increase these numbers if the heading does not corrects strongly enough (eg: a heavy robot or using tracks)
-    // Decrease these numbers if the heading does not settle on the correct value (eg: very agile robot with omni wheels)
-    static final double     P_TURN_GAIN            = 0.005;     // Larger is more responsive, but also less stable
-    static final double     P_DRIVE_GAIN           = 0.03;     // Larger is more responsive, but also less stable
 
     protected int mtr_fl_position = 0;
     protected int mtr_fr_position = 0;
     protected int mtr_bl_position = 0;
     protected int mtr_br_position = 0;
     protected int minMotorDist = 45;
+
     //protected DcMotor greenThing;
     //protected DcMotor linearSlide;
     //protected DcMotor intake;
     //protected Servo amongus;
     //protected Servo wrist;
 
-    protected boolean gopmode_enabled = false;
+    protected boolean gopmode_enabled = true;
 
     //protected float intakeDirection = 0f;
     //protected boolean intakeButtonPressed = false;
@@ -108,17 +85,28 @@ public class Controller extends LinearOpMode{
         mtr_bl  = hardwareMap.get(DcMotor.class, "motor-bl");
         mtr_br  = hardwareMap.get(DcMotor.class, "motor-br");
 
-        grabber = hardwareMap.get(Servo.class, "claw");
+        slide = hardwareMap.get(DcMotor.class, "slide");
+        slideStartPosition = slide.getCurrentPosition();
+
+        //grabber = hardwareMap.get(Servo.class, "claw");
+        //grabber = hardwareMap.get(Servo.class, "claw");
 
         //greenThing = hardwareMap.get(DcMotor.class, "greenthing");
         //intake = hardwareMap.get(DcMotor.class, "intake");
         //linearSlide = hardwareMap.get(DcMotor.class, "linearslide");
         //amongus = hardwareMap.get(Servo.class, "amongus");
         //wrist = hardwareMap.get(Servo.class, "wrist");
+
         mtr_fl.setDirection(DcMotor.Direction.FORWARD);
         mtr_bl.setDirection(DcMotor.Direction.FORWARD);
         mtr_fr.setDirection(DcMotor.Direction.REVERSE);
         mtr_br.setDirection(DcMotor.Direction.REVERSE);
+
+        mtr_fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        mtr_bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        mtr_fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        mtr_br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit            = BNO055IMU.AngleUnit.DEGREES;
@@ -355,72 +343,6 @@ public class Controller extends LinearOpMode{
         while(isDriveBusy()){
             sleep(100);
         }
-    }
-
-    /**
-     *  Method to spin on central axis to point in a new direction.
-     *  Move will stop if either of these conditions occur:
-     *  1) Move gets to the heading (angle)
-     *  2) Driver stops the opmode running.
-     *
-     * @param maxTurnSpeed Desired MAX speed of turn. (range 0 to +1.0)
-     * @param heading Absolute Heading Angle (in Degrees) relative to last gyro reset.
-     *              0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
-     *              If a relative angle is required, add/subtract from current heading.
-     */
-    public void driveTurnToHeading(double maxTurnSpeed, double heading) {
-
-        // Run getSteeringCorrection() once to pre-calculate the current error
-        getSteeringCorrection(heading, P_DRIVE_GAIN);
-
-        // keep looping while we are still active, and not on heading.
-        while (opModeIsActive() && (Math.abs(headingError) > HEADING_THRESHOLD)) {
-            startDrive(0,0,Range.clip(getSteeringCorrection(heading, P_TURN_GAIN), -maxTurnSpeed, maxTurnSpeed));
-        }
-
-        // Stop all motion;
-        stopDrive();
-    }
-
-    /**
-     * This method uses a Proportional Controller to determine how much steering correction is required.
-     *
-     * @param desiredHeading        The desired absolute heading (relative to last heading reset)
-     * @param proportionalGain      Gain factor applied to heading error to obtain turning power.
-     * @return                      Turning power needed to get to required heading.
-     */
-    public double getSteeringCorrection(double desiredHeading, double proportionalGain) {
-        targetHeading = desiredHeading;  // Save for telemetry
-
-        // Get the robot heading by applying an offset to the IMU heading
-        robotHeading = getRawHeading() - headingOffset;
-
-        // Determine the heading current error
-        headingError = targetHeading - robotHeading;
-
-        // Normalize the error to be within +/- 180 degrees
-        while (headingError > 180)  headingError -= 360;
-        while (headingError <= -180) headingError += 360;
-
-        // Multiply the error by the gain to determine the required steering correction/  Limit the result to +/- 1.0
-        return Range.clip(headingError * proportionalGain, -1, 1);
-    }
-
-    /**
-     * read the raw (un-offset Gyro heading) directly from the IMU
-     */
-    public double getRawHeading() {
-        Orientation angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        return angles.firstAngle;
-    }
-
-    /**
-     * Reset the "offset" heading back to zero
-     */
-    public void resetHeading() {
-        // Save a new heading offset equal to the current raw heading.
-        headingOffset = getRawHeading();
-        robotHeading = 0;
     }
 
     @Override

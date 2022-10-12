@@ -8,17 +8,28 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
 //joe add comments goteem
 @TeleOp(name="OPMODE", group="Opmodes")
 public class OpMode extends Controller {
     protected void operate(){
         drive();
 
-        if(gamepad1.a){
+        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+        imu.getPosition();
+        telemetry.addData("angle: ",angles.firstAngle);
+        telemetry.update();
+
+        /*if(gamepad1.a){
             grabber.setPosition(1);
         } else {
             grabber.setPosition(0);
-        }
+        }*/
 
         /*if(gamepad2.right_bumper || gamepad2.right_trigger > 0) {
             if(gamepad2.right_bumper) {
