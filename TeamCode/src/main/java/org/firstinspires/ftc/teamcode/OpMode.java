@@ -18,8 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 @TeleOp(name="OPMODE", group="Opmodes")
 public class OpMode extends Controller {
     protected void operate(){
-        //hahaahhahahah i am reuubbubbben in real life
-        //haoohoohoho i am joe
+
 
         drive();
 
