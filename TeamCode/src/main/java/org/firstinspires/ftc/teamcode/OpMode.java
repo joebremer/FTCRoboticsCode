@@ -19,6 +19,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class OpMode extends Controller {
     protected void operate(){
         //hahaahhahahah i am reuubbubbben in real life
+        //haoohoohoho i am joe
 
         drive();
 
