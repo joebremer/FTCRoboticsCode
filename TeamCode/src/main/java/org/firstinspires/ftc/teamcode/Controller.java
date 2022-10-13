@@ -209,6 +209,7 @@ public class Controller extends LinearOpMode{
             mtr_bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             mtr_br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         } else {
+
             if(mtr_fl.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
                 runWithEncoders(true);
             }
