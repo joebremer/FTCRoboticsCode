@@ -28,7 +28,7 @@ public class OpMode extends Controller {
         telemetry.addData("angle: ",angles.firstAngle);
         telemetry.update();
 
-        /*if(gamepad1.a){
+        /*if(gamepad1.a){6
             grabber.setPosition(1);
         } else {
             grabber.setPosition(0);
