@@ -51,7 +51,7 @@ public class Controller extends LinearOpMode{
     //protected float intakeDirection = 0f;
     //protected boolean intakeButtonPressed = false;
 
-    protected boolean inReverse = true;
+    //protected boolean inReverse = true;
     //protected boolean leftBumperPressed = false;
 
     protected double speed = 1.0;
@@ -193,23 +193,19 @@ public class Controller extends LinearOpMode{
         double ctrl_strafe = -gamepad1.right_stick_x;
         double ctrl_turn = gamepad1.left_stick_x;
 
-        if(gamepad1.b) {
-            mtr_fl.setTargetPosition(mtr_fl_position);
-            mtr_fr.setTargetPosition(mtr_fr_position);
-            mtr_bl.setTargetPosition(mtr_bl_position);
-            mtr_br.setTargetPosition(mtr_br_position);
+        double[] ctrl = calculateMove(ctrl_forward, ctrl_strafe, ctrl_turn);
 
-            mtr_fl.setPower(0.25);
-            mtr_fr.setPower(0.25);
-            mtr_bl.setPower(0.25);
-            mtr_br.setPower(0.25);
+        mtr_fl.setPower(ctrl[0] * speed);
+        mtr_fr.setPower(ctrl[1] * speed);
+        mtr_bl.setPower(ctrl[2] * speed);
+        mtr_br.setPower(ctrl[3] * speed);
 
             mtr_fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             mtr_fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             mtr_bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             mtr_br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         } else {
-
+            
             if(mtr_fl.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
                 runWithEncoders(true);
             }
@@ -236,6 +232,11 @@ public class Controller extends LinearOpMode{
             mtr_bl_position = mtr_bl.getCurrentPosition();
             mtr_br_position = mtr_br.getCurrentPosition();
         }
+        mtr_fl_position = mtr_fl.getCurrentPosition();
+        mtr_fr_position = mtr_fr.getCurrentPosition();
+        mtr_bl_position = mtr_bl.getCurrentPosition();
+        mtr_br_position = mtr_br.getCurrentPosition();
+
     }
 
     protected boolean numDistLessThan(int num_a, int num_b){
