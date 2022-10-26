@@ -206,43 +206,10 @@ public class Controller extends LinearOpMode{
         mtr_bl.setPower(ctrl[2] * speed);
         mtr_br.setPower(ctrl[3] * speed);
 
-            mtr_fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            mtr_fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            mtr_bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            mtr_br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        } else {
-            
-            if(mtr_fl.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
-                runWithEncoders(true);
-            }
-
-            if (gamepad1.dpad_up) {
-                ctrl_forward = -1;
-            } else if (gamepad1.dpad_down) {
-                ctrl_forward = 1;
-            }
-
-            if (inReverse) {
-                ctrl_forward *= -1;
-                ctrl_strafe *= -1;
-            }
-            double[] ctrl = calculateMove(ctrl_forward, ctrl_strafe, ctrl_turn);
-
-            mtr_fl.setPower(ctrl[0] * speed);
-            mtr_fr.setPower(ctrl[1] * speed);
-            mtr_bl.setPower(ctrl[2] * speed);
-            mtr_br.setPower(ctrl[3] * speed);
-
-            mtr_fl_position = mtr_fl.getCurrentPosition();
-            mtr_fr_position = mtr_fr.getCurrentPosition();
-            mtr_bl_position = mtr_bl.getCurrentPosition();
-            mtr_br_position = mtr_br.getCurrentPosition();
-        }
         mtr_fl_position = mtr_fl.getCurrentPosition();
         mtr_fr_position = mtr_fr.getCurrentPosition();
         mtr_bl_position = mtr_bl.getCurrentPosition();
         mtr_br_position = mtr_br.getCurrentPosition();
-
     }
 
     protected boolean numDistLessThan(int num_a, int num_b){
