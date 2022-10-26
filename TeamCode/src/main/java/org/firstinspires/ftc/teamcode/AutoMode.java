@@ -14,6 +14,7 @@ public class AutoMode extends Controller{
         setup();
         try {
             autoMode();
+            claw.setPosition(clawRestingPos);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

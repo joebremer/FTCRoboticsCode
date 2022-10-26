@@ -27,6 +27,33 @@ public class OpMode extends Controller {
         telemetry.addData("angle: ",angles.firstAngle);
         telemetry.update();
 
+        if(gamepad2.a){
+            claw.setPosition(1);
+        } else {
+            claw.setPosition(clawRestingPos);
+        }
+
+        float slidePower = 0;
+
+        if(gamepad2.dpad_down){
+            if(slide.getCurrentPosition() < slideStartPosition) {
+                slidePower = slideSpeed;
+            }
+            slide.setPower(slidePower);
+        } else if(gamepad2.dpad_up) {
+            if(slide.getCurrentPosition() > slideStartPosition+slideSize) {
+                slidePower = -slideSpeed;
+            } else if(slide.getCurrentPosition() > slideStartPosition+slideSize+slidePad){
+                slidePower = -slideSpeed/3;
+            }
+            slide.setPower(slidePower);
+        } else {
+            if(slide.getCurrentPosition() < slideStartPosition+slidePad){
+                slidePower = -slideSupportSpeed;
+            }
+            slide.setPower(slidePower);
+        }
+
         /*if(gamepad1.a){6
             grabber.setPosition(1);
         } else {

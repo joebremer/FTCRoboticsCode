@@ -26,11 +26,15 @@ public class Controller extends LinearOpMode{
 
     protected DcMotor slide;
     protected int slideStartPosition;
-    protected int slideSize = -2000;
-    protected int slidePad = -800;
+    protected int slideSize = -3200;
+    protected int slidePad = -600;
     protected float slideSpeed = 0.5f;
+    protected float slideSupportSpeed = 0.1f;
 
     protected Servo grabber;
+
+    protected Servo claw;
+    protected float clawRestingPos = 0.82f;
 
     protected BNO055IMU imu;
 
@@ -87,6 +91,8 @@ public class Controller extends LinearOpMode{
 
         slide = hardwareMap.get(DcMotor.class, "slide");
         slideStartPosition = slide.getCurrentPosition();
+
+        claw = hardwareMap.get(Servo.class, "claw");
 
         //grabber = hardwareMap.get(Servo.class, "claw");
         //grabber = hardwareMap.get(Servo.class, "claw");
@@ -312,6 +318,24 @@ public class Controller extends LinearOpMode{
         while(isDriveBusy()){
             sleep(100);
         }
+    }
+
+    protected void moveSlideToPosition(float percentPosition){
+        float slideCurrentPosition = slideStartPosition+slideSize*Math.max(0,Math.min(1,percentPosition));
+
+        if(slide.getCurrentPosition() > slideCurrentPosition){
+            while(slide.getCurrentPosition() > slideCurrentPosition){
+                slide.setPower(-slideSpeed);
+                this.sleep(100);
+            }
+        } else {
+            while(slide.getCurrentPosition() < slideCurrentPosition){
+                slide.setPower(slideSpeed);
+                this.sleep(100);
+            }
+        }
+
+        slide.setPower(0);
     }
 
     @Override
