@@ -34,7 +34,7 @@ public class Controller extends LinearOpMode{
     protected Servo grabber;
 
     protected Servo claw;
-    protected float clawRestingPos = 0.82f;
+    protected float clawRestingPos = 0.5f;
 
     protected BNO055IMU imu;
 

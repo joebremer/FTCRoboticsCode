@@ -12,14 +12,15 @@ public class AutoMode_B_Place extends AutoMode {
         claw.setPosition(1);
         this.sleep(500);
         driveForwardForIN(4);
-        driveStrafeForIN(36.8, 0.7f);
+        driveStrafeForIN(32.0, 0.7); //must test on the real thing to see if it lines up
         driveForwardForIN(32);
         moveSlideToPosition(0.95f);
         driveForwardForIN(4,0.3f);
         claw.setPosition(clawRestingPos);
         this.sleep(500);
-        driveForwardForIN(-4,0.3f);
-        moveSlideToPosition(0f);
+        driveForwardForIN(-4,0.3);
+        driveStrafeForIN(-32, 0.7);
+        moveSlideToPosition(0);
         driveForwardForIN(-32);
     }
 }
