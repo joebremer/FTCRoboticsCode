@@ -29,7 +29,7 @@ public class Controller extends LinearOpMode{
     protected int slideSize = -3200;
     protected int slidePad = -600;
     protected float slideSpeed = 0.5f;
-    protected float slideSupportSpeed = 0.1f;
+    protected float slideSupportSpeed = 0.18f;
 
     protected Servo grabber;
 
