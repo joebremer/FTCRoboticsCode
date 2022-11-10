@@ -32,6 +32,8 @@ public class Controller extends LinearOpMode{
     protected float slideSpeedDown = 0.5f;
     protected float slideSupportSpeed = 0.18f;
 
+    protected float slideGoalPositionHigh = 0.87f;
+
     protected Servo grabber;
 
     protected Servo claw;
@@ -250,7 +252,7 @@ public class Controller extends LinearOpMode{
 
         startDrive(spd,0,0);
 
-        while(isDriveBusy()){
+        while(isDriveBusy() && opModeIsActive()){
             sleep(100);
         }
     }
@@ -281,7 +283,7 @@ public class Controller extends LinearOpMode{
 
         startDrive(0,spd,0);
 
-        while(isDriveBusy()){
+        while(isDriveBusy() && opModeIsActive()){
             sleep(100);
         }
     }
@@ -317,7 +319,7 @@ public class Controller extends LinearOpMode{
 
         startDrive(0,0,spd);
 
-        while(isDriveBusy()){
+        while(isDriveBusy() && opModeIsActive()){
             sleep(100);
         }
     }
@@ -326,12 +328,12 @@ public class Controller extends LinearOpMode{
         float slideCurrentPosition = slideStartPosition+slideSize*Math.max(0,Math.min(1,percentPosition));
 
         if(slide.getCurrentPosition() > slideCurrentPosition){
-            while(slide.getCurrentPosition() > slideCurrentPosition){
+            while(slide.getCurrentPosition() > slideCurrentPosition && opModeIsActive()){
                 slide.setPower(-slideSpeedUp);
                 this.sleep(100);
             }
         } else {
-            while(slide.getCurrentPosition() < slideCurrentPosition){
+            while(slide.getCurrentPosition() < slideCurrentPosition && opModeIsActive()){
                 slide.setPower(slideSpeedDown);
                 this.sleep(100);
             }
