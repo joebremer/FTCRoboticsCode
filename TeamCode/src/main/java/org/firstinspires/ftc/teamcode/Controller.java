@@ -32,7 +32,7 @@ public class Controller extends LinearOpMode{
     protected float slideSpeedDown = 0.5f;
     protected float slideSupportSpeed = 0.18f;
 
-    protected float slideGoalPositionHigh = 0.87f;
+    protected float slideGoalPositionHigh = 0.85f;
 
     protected Servo grabber;
 
@@ -299,11 +299,11 @@ public class Controller extends LinearOpMode{
         stopDrive();
         runWithEncoders(true);
 
-        double spd = 0.75;
+        double spd = 0.5;
 
         //mm
         //int targetPos = (int) (aTurn*11.775);
-        int targetPos = (int) (aTurn*9.375);
+        int targetPos = (int) (aTurn*9.3);
 
         double ctrl[] = calculateMove(0,0,1);
 

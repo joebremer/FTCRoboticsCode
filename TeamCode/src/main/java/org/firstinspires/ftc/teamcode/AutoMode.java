@@ -27,43 +27,43 @@ public class AutoMode extends Controller{
         this.sleep(900);
         moveSlideToPosition(0.1f);
         driveForwardForIN(4);
-        driveStrafeForIN(36*dir, 0.7f);
+        driveStrafeForIN(32*dir, 0.7f);
         driveForwardForIN(32);
         moveSlideToPosition(slideGoalPositionHigh);
-        driveForwardForIN(6,0.3f);
+        driveForwardForIN(5,0.6f);
         claw.setPosition(clawRestingPos);
         this.sleep(500);
 
-        driveForwardForIN(-6,0.3f);
+        driveForwardForIN(-5,0.6f);
         moveSlideToPosition(0f);
         driveStrafeForIN(-12*dir);
-        driveForwardForIN(24);
+        driveForwardForIN(29.2);
         driveTurnForAngle(-90*dir);
         driveForwardForIN(46);
 
 
-        for(int i = 0; i < 2; i++) {
-            moveSlideToPosition(0.1f);
-            driveForwardForIN(12,0.6);
+        for(int i = 0; i < 1; i++) {
+            moveSlideToPosition(0.05f);
+            driveForwardForIN(13.5,0.8);
             claw.setPosition(clawClosedPos);
             this.sleep(900);
             moveSlideToPosition(0.2f);
-            driveForwardForIN(-6);
+            driveForwardForIN(-8);
             moveSlideToPosition(0.1f);
-            driveForwardForIN(-36);
+            driveForwardForIN(-35);
             driveTurnForAngle(90*dir);
-            driveForwardForIN(5, 0.5);
             moveSlideToPosition(slideGoalPositionHigh);
-            driveForwardForIN(2, 0.3);
+            driveForwardForIN(2.5, 0.6);
             claw.setPosition(clawRestingPos);
             this.sleep(900);
-            driveForwardForIN(-7, 0.3);
+            driveForwardForIN(-2.5, 0.6);
             moveSlideToPosition(0f);
             driveTurnForAngle(-90*dir);
             driveForwardForIN(30);
         }
 
         driveStrafeForIN(-48);
+        this.sleep(6000);
 
         /*driveForwardForIN(-4,0.3f);
         moveSlideToPosition(0f);
