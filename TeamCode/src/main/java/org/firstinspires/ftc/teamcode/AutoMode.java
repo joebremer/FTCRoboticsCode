@@ -30,8 +30,8 @@ public class AutoMode extends Controller{
         driveForwardForIN(4);
         driveStrafeForIN(36*dir, 0.7f);
         driveForwardForIN(32);
-        moveSlideToPosition(0.92f);
-        driveForwardForIN(4,0.3f);
+        moveSlideToPosition(0.87f);
+        driveForwardForIN(7,0.3f);
         claw.setPosition(clawRestingPos);
         this.sleep(500);
         driveForwardForIN(-4,0.3f);

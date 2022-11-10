@@ -265,7 +265,7 @@ public class Controller extends LinearOpMode{
         runWithEncoders(true);
 
         //mm
-        int targetPos = (int) (fDist*(8.7/Math.PI));
+        int targetPos = (int) (fDist*(8.5/Math.PI));
 
         double ctrl[] = calculateMove(0,1,0);
 
