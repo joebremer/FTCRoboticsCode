@@ -10,12 +10,12 @@ public class SlideTest extends Controller {
 
         if(gamepad2.dpad_up){
             if(slide.getCurrentPosition() < slideStartPosition) {
-                slidePower = slideSpeed;
+                slidePower = slideSpeedUp;
             }
             slide.setPower(slidePower);
         } else if(gamepad2.dpad_down) {
             if(slide.getCurrentPosition() > slideStartPosition+slideSize) {
-                slidePower = -slideSpeed;
+                slidePower = -slideSpeedDown;
             }
             slide.setPower(slidePower);
         } else {

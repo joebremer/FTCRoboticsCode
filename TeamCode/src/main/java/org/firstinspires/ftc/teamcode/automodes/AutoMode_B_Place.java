@@ -9,6 +9,6 @@ public class AutoMode_B_Place extends AutoMode {
 
     @Override
     protected void autoMode() throws InterruptedException {
-        movePlaceCone(1);
+        movePlaceCone(-1);
     }
 }

@@ -28,13 +28,15 @@ public class Controller extends LinearOpMode{
     protected int slideStartPosition;
     protected int slideSize = -3200;
     protected int slidePad = -600;
-    protected float slideSpeed = 0.5f;
+    protected float slideSpeedUp = 0.8f;
+    protected float slideSpeedDown = 0.5f;
     protected float slideSupportSpeed = 0.18f;
 
     protected Servo grabber;
 
     protected Servo claw;
-    protected float clawRestingPos = 0.5f;
+    protected float clawRestingPos = 0f;
+    protected float clawClosedPos = 0.8f;
 
     protected BNO055IMU imu;
 
@@ -189,14 +191,14 @@ public class Controller extends LinearOpMode{
     protected void drive(){
         double ctrl_forward = 0;
         if(gamepad1.right_trigger != 0){
-            ctrl_forward = gamepad1.right_trigger*1.5;
+            ctrl_forward = -gamepad1.right_trigger*1.5;
             if(gamepad1.left_trigger > 0.8){
-                ctrl_forward = gamepad1.right_trigger/4;
+                ctrl_forward = -gamepad1.right_trigger/4;
             }
         } else {
-            ctrl_forward = -gamepad1.left_trigger*2;
+            ctrl_forward = gamepad1.left_trigger*2;
         }
-        double ctrl_strafe = -gamepad1.right_stick_x;
+        double ctrl_strafe = gamepad1.right_stick_x;
         double ctrl_turn = gamepad1.left_stick_x;
 
         double[] ctrl = calculateMove(ctrl_forward, ctrl_strafe, ctrl_turn);
@@ -263,7 +265,7 @@ public class Controller extends LinearOpMode{
         runWithEncoders(true);
 
         //mm
-        int targetPos = (int) (fDist*(9/Math.PI));
+        int targetPos = (int) (fDist*(8.7/Math.PI));
 
         double ctrl[] = calculateMove(0,1,0);
 
@@ -325,17 +327,17 @@ public class Controller extends LinearOpMode{
 
         if(slide.getCurrentPosition() > slideCurrentPosition){
             while(slide.getCurrentPosition() > slideCurrentPosition){
-                slide.setPower(-slideSpeed);
+                slide.setPower(-slideSpeedUp);
                 this.sleep(100);
             }
         } else {
             while(slide.getCurrentPosition() < slideCurrentPosition){
-                slide.setPower(slideSpeed);
+                slide.setPower(slideSpeedDown);
                 this.sleep(100);
             }
         }
 
-        slide.setPower(0);
+        slide.setPower(-slideSupportSpeed);
     }
 
     @Override

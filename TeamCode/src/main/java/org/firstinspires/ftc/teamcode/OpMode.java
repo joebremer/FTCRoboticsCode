@@ -28,7 +28,7 @@ public class OpMode extends Controller {
         telemetry.update();
 
         if(gamepad2.a){
-            claw.setPosition(1);
+            claw.setPosition(clawClosedPos);
         } else {
             claw.setPosition(clawRestingPos);
         }
@@ -37,14 +37,14 @@ public class OpMode extends Controller {
 
         if(gamepad2.dpad_down){
             if(slide.getCurrentPosition() < slideStartPosition) {
-                slidePower = slideSpeed;
+                slidePower = slideSpeedDown;
             }
             slide.setPower(slidePower);
         } else if(gamepad2.dpad_up) {
             if(slide.getCurrentPosition() > slideStartPosition+slideSize) {
-                slidePower = -slideSpeed;
+                slidePower = -slideSpeedUp;
             } else if(slide.getCurrentPosition() > slideStartPosition+slideSize+slidePad){
-                slidePower = -slideSpeed/3;
+                slidePower = -slideSpeedUp/3;
             }
             slide.setPower(slidePower);
         } else {
