@@ -42,7 +42,7 @@ public class AutoMode extends Controller{
         driveForwardForIN(46);
 
 
-        for(int i = 0; i < 1; i++) {
+        for(int i = 0; i < 1; i++) { // could run more times
             moveSlideToPosition(0.05f);
             driveForwardForIN(13.5,0.8);
             claw.setPosition(clawClosedPos);
