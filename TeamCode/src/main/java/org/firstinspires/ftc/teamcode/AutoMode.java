@@ -34,7 +34,7 @@ public class AutoMode extends Controller{
         claw.setPosition(clawRestingPos);
         this.sleep(500);
 
-        driveForwardForIN(-5,0.6f);
+        /*driveForwardForIN(-5,0.6f);
         moveSlideToPosition(0f);
         driveStrafeForIN(-12*dir);
         driveForwardForIN(29.2);
@@ -63,10 +63,10 @@ public class AutoMode extends Controller{
         }
 
         driveStrafeForIN(-48);
-        this.sleep(6000);
+        this.sleep(6000);*/
 
-        /*driveForwardForIN(-4,0.3f);
+        driveForwardForIN(-5,0.3f);
         moveSlideToPosition(0f);
-        driveForwardForIN(-25);*/
+        driveForwardForIN(-25);
     }
 }
