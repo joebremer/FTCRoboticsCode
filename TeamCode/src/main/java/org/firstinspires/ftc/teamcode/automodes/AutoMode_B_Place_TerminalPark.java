@@ -4,11 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.AutoMode;
 
-@Autonomous(name="AUTO, R, PLACE, SUBSTATION PARK", group="R")
-public class AutoMode_R_Place extends AutoMode {
+@Autonomous(name="AUTO, B, PLACE, TERMINAL PARK", group="B")
+public class AutoMode_B_Place_TerminalPark extends AutoMode {
 
     @Override
     protected void autoMode() throws InterruptedException {
-        movePlaceCone(1,false);
+        movePlaceCone(-1,true);
     }
 }

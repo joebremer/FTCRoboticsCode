@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.AutoMode;
 
 import java.util.List;
 
-//@Disabled
+@Disabled
 @Autonomous(name="{MISC} HUB",group="MISC")
 public class AutoMode_Check extends AutoMode {
     /* Note: This sample uses the all-objects Tensor Flow model (FreightFrenzy_BCDM.tflite), which contains

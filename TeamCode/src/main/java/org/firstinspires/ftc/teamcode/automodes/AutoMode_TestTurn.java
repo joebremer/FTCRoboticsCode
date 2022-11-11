@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import org.firstinspires.ftc.teamcode.AutoMode;
 import org.firstinspires.ftc.teamcode.Controller;
 
+@Disabled
 @Autonomous(name="Autonomous_TestTurn")
 public class AutoMode_TestTurn extends AutoMode {
 
