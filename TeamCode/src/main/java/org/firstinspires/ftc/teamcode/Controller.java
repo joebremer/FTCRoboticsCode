@@ -33,6 +33,8 @@ public class Controller extends LinearOpMode{
     protected float slideSupportSpeed = 0.18f;
 
     protected float slideGoalPositionHigh = 0.85f;
+    protected float slideGoalPositionMedium = 0.5f;
+
 
     protected Servo grabber;
 
@@ -324,8 +326,12 @@ public class Controller extends LinearOpMode{
         }
     }
 
+    protected float slidePercentageToEncoderPosition(float percentPosition){
+        return slideStartPosition+slideSize*Math.max(0,Math.min(1,percentPosition));
+    }
+
     protected void moveSlideToPosition(float percentPosition){
-        float slideCurrentPosition = slideStartPosition+slideSize*Math.max(0,Math.min(1,percentPosition));
+        float slideCurrentPosition = slidePercentageToEncoderPosition(percentPosition);
 
         if(slide.getCurrentPosition() > slideCurrentPosition){
             while(slide.getCurrentPosition() > slideCurrentPosition && opModeIsActive()){
