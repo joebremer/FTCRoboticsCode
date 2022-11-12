@@ -19,7 +19,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-public class Controller extends LinearOpMode{
+public class WeByteController extends LinearOpMode{
     protected DcMotor mtr_fl;
     protected DcMotor mtr_fr;
     protected DcMotor mtr_bl;
@@ -40,8 +40,8 @@ public class Controller extends LinearOpMode{
     protected Servo grabber;
 
     protected Servo claw;
-    protected float clawRestingPos = 0f;
-    protected float clawClosedPos = 0.8f;
+    protected float clawRestingPos = 0.2f;
+    protected float clawClosedPos = 0.6f;
 
     protected BNO055IMU imu;
 

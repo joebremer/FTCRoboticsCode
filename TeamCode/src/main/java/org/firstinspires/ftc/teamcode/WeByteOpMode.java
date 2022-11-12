@@ -1,15 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.ftccommon.SoundPlayer;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 //joe add comments goteem
-@TeleOp(name="OPMODEPRESETS", group="Opmodes")
-public class OpModePresets extends Controller {
+@TeleOp(name="WEBYTEOPMODE", group="Opmodes")
+public class WeByteOpMode extends Controller {
     protected void operate(){
 
 
@@ -19,6 +26,7 @@ public class OpModePresets extends Controller {
         imu.getPosition();
         telemetry.addData("angle: ",angles.firstAngle);
         telemetry.update();
+
         if(gamepad2.a){
             claw.setPosition(clawClosedPos);
         } else {
@@ -44,16 +52,6 @@ public class OpModePresets extends Controller {
                 slidePower = -slideSupportSpeed;
             }
             slide.setPower(slidePower);
-        }
-
-        if (gamepad2.y) {
-            if (slide.getCurrentPosition() > slidePercentageToEncoderPosition(slideGoalPositionHigh)+40) {
-                slide.setPower(-slideSpeedUp);
-            }
-
-            if (slide.getCurrentPosition() < slidePercentageToEncoderPosition(slideGoalPositionHigh)-40) {
-                slide.setPower(slideSpeedDown);
-            }
         }
 
         /*if(gamepad1.a){6
@@ -125,7 +123,7 @@ public class OpModePresets extends Controller {
         setup();
 
         while (opModeIsActive()) {
-           operate();
+            operate();
         }
     }
 }
