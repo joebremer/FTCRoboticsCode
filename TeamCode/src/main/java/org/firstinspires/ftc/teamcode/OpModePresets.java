@@ -54,16 +54,6 @@ public class OpModePresets extends Controller {
             if (slide.getCurrentPosition() < slidePercentageToEncoderPosition(slideGoalPositionHigh)-40) {
                 slide.setPower(slideSpeedDown);
             }
-        } else if (gamepad2.x){
-            if (slide.getCurrentPosition() < slideStartPosition+slideSize+slidePad){
-                slide.setTargetPosition(slideGoalPositionhigh);
-
-            }
-        }else if (gamepad2.b){
-            if (slide.getCurrentPosition() < slideStartPosition+slideSize+slidePad){
-                slide.setTargetPosition(slideGoalPositionHigh);
-
-            }
         }
 
         /*if(gamepad1.a){6
