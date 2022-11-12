@@ -20,7 +20,7 @@ public class AutoMode extends Controller{
         }
     }
 
-    public void movePlaceCone(float mirror){
+    public void movePlaceCone(float mirror, boolean parkInTerminal){
         float dir = Math.signum(mirror);
 
         claw.setPosition(clawClosedPos);
@@ -62,11 +62,15 @@ public class AutoMode extends Controller{
             driveForwardForIN(30);
         }
 
-        driveStrafeForIN(-48);
+        driveStrafeForIN(-48*dir);
         this.sleep(6000);*/
 
         driveForwardForIN(-5,0.3f);
         moveSlideToPosition(0f);
-        driveForwardForIN(-25);
+        driveForwardForIN(-28);
+
+        if(parkInTerminal) {
+            driveStrafeForIN(-48*dir);
+        }
     }
 }
