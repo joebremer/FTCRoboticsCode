@@ -16,7 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 //joe add comments goteem
 @TeleOp(name="WEBYTEOPMODE", group="Opmodes")
-public class WeByteOpMode extends Controller {
+public class WeByteOpMode extends WeByteController {
     protected void operate(){
 
 
